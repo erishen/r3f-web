@@ -11,13 +11,24 @@ const withPWA = require('@ducanh2912/next-pwa').default({
   disable: process.env.NODE_ENV === 'development',
 })
 
+const getBasePath = () => {
+  // console.log('process.env.BASE_PATH', process.env.BASE_PATH)
+  return process.env.BASE_PATH || ''
+}
+
 const nextConfig = {
   // uncomment the following snippet if using styled components
   // compiler: {
   //   styledComponents: true,
   // },
+  basePath: getBasePath(),
   reactStrictMode: true, // Recommended for the `pages` directory, default in `app`.
   images: {},
+  publicRuntimeConfig: {
+    host: '127.0.0.1',
+    port: '8082',
+    prefix: getBasePath(),
+  },
   webpack(config, { isServer }) {
     if (!isServer) {
       // We're in the browser build, so we can safely exclude the sharp module
